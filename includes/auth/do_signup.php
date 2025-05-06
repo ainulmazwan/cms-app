@@ -7,14 +7,20 @@
     $confirm_password = $_POST["confirm_password"];
 
     if ( empty( $name) || empty( $email) || empty($password) || empty($confirm_password)){
-        echo "All the fields are required";
+        $_SESSION["error"] = "All fields are required";
+        header("location: /signup");
+        exit;
     }else if ($password!== $confirm_password) {
-        echo "Your password does not match";
+        $_SESSION["error"] = "Password does not match";
+        header("location: /signup");
+        exit;
     }else{
         $user = getUserByEmail($email);
         // check if user exist
         if($user){
-            echo "email provided exists";
+            $_SESSION["error"] = "Email already exists";
+            header("location: /signup");
+            exit;
         }else{
             // 6. create a user account
             // 6.1 SQL command
@@ -28,7 +34,11 @@
                 "password" => password_hash( $password, PASSWORD_DEFAULT )
             ]);
 
-            // 6. redirect to login.php
+            // 7. set success message
+            $_SESSION["success"] = "Account created successfully. Please login with your email and password";
+
+
+            // 8. redirect to login.php
             header("Location: /login");
             exit;
         }
