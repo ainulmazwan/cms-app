@@ -46,6 +46,9 @@
     case '/manage-users-changepwd':
       require "pages/manage-users-changepwd.php";
       break;
+    case '/post':
+      require "pages/post.php";
+      break;
     
     default:
       require "pages/home.php";
