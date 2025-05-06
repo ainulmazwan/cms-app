@@ -11,19 +11,7 @@
     }else if ($password!== $confirm_password) {
         echo "Your password does not match";
     }else{
-        // 5. create a user account
-        // 5.1 SQL command
-        $sql = "SELECT * FROM users WHERE email = :email";
-        // 5.2 prepare
-        $query = $database->prepare($sql);
-
-        // 5.3 execute
-        $query -> execute([
-            "email" => $email
-            
-        ]);
-
-        $user = $query->fetch();
+        $user = getUserByEmail($email);
         // check if user exist
         if($user){
             echo "email provided exists";
