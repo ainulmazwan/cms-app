@@ -57,7 +57,7 @@
         <a href="index.html" class="text-decoration-none small"
           ><i class="bi bi-arrow-left-circle"></i> Go back</a
         >
-        <a href="signup.html" class="text-decoration-none small"
+        <a href="/signup" class="text-decoration-none small"
           >Don't have an account? Sign up here
           <i class="bi bi-arrow-right-circle"></i
         ></a>
