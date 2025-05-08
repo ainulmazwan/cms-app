@@ -60,6 +60,6 @@
         }
     }
     function isEditor(){
-        return isset($_SESSION["user"]) && ($_SESSION["user"]["role"] === "admin" || "admin" || $_SESSION["user"]["role"] === "editor") ? true : false;
+        return isset($_SESSION["user"]) && ($_SESSION["user"]["role"] === "admin" || $_SESSION["user"]["role"] === "editor") ? true : false;
     }
 ?>
