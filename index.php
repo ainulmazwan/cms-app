@@ -6,6 +6,10 @@
   $path = ($_SERVER["REQUEST_URI"]);
   
   // once figure out path, load relevent content based on path
+
+  // remove all query string (?) from url
+  $path = parse_url( $path, PHP_URL_PATH );
+
   switch ($path) {
     case '/login':
       require "pages/login.php";
@@ -49,6 +53,24 @@
     case '/post':
       require "pages/post.php";
       break;
+    // setup action route for add user
+    case '/user/add':
+      require "includes/user/add.php";
+      break;
+    //setup action route for delete user
+    case '/user/delete':
+      require "includes/user/delete.php";
+      break;
+    // setup action route for change password
+    case '/user/changepwd' :
+      require "includes/user/changepwd.php";
+      break;
+    // setup action route for update user
+    case '/user/update' :
+      require "includes/user/update.php";
+      break;
+
+    
     
     default:
       require "pages/home.php";

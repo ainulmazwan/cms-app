@@ -49,4 +49,17 @@
         return isset($_SESSION["user"]);
     }
     
+
+    function isAdmin(){
+        // check if user session is set or not
+        if (isset($_SESSION["user"]) ){
+            // check if user is admit
+            if ($_SESSION["user"]["role"]==="admin"){
+                    return true;
+            }
+        }
+    }
+    function isEditor(){
+        return isset($_SESSION["user"]) && ($_SESSION["user"]["role"] === "admin" || "admin" || $_SESSION["user"]["role"] === "editor") ? true : false;
+    }
 ?>

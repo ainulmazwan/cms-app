@@ -2,9 +2,10 @@
   <body>
     <div class="container mx-auto my-5" style="max-width: 500px;">
       <h1 class="h1 mb-4 text-center">My Blog</h1>
+      <!-- greeting message -->
       <?php if (isUserLoggedIn()): ?>
         <div class="d-flex gap-4">
-          <p>Hello, <?= $_SESSION["user"]["name"]; ?></p>
+          <p>Welcome back, <?= $_SESSION["user"]["name"]; ?></p>
           <a href="/dashboard">Go to dashboard</a>
         </div>  
       <?php endif; ?>
