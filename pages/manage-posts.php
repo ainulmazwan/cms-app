@@ -1,9 +1,43 @@
 <?php
     $database = connectToDB();
 
-    $sql = "SELECT * FROM posts";
+    $user_id = $_SESSION["user"]["id"];
+
+    /* 
+      use ORDER BY to sort by column
+      use ASC to sort by ascending order (lowest value first)
+      use DESC to sort by descending order (highest value first)
+    */
+  /*
+  
+  */
+  if (isEditor()){
+    $sql = "SELECT posts.*, users.name 
+            FROM posts 
+            JOIN users 
+            ON posts.user_id = users.id 
+            ORDER BY posts.id DESC";
     $query = $database->prepare($sql);
     $query->execute();
+  }else{
+    // version 1 (recommended)
+    $sql = "SELECT posts.*, users.name
+            FROM posts 
+            JOIN users 
+            ON posts.user_id = users.id 
+            WHERE user_id = :user_id  
+            ORDER BY posts.id DESC";
+    $query = $database->prepare($sql);
+    $query->execute([
+      "user_id" => $user_id
+    ]);
+  }
+    // version 2 (not recommended)
+    /* 
+    $sql = "SELECT * FROM posts WHERE user_id = " . $user_id . "ORDER BY id ASC";
+    $query = $database->prepare($sql);
+    $query->execute();
+    */
     $posts = $query->fetchAll();
 
 ?>
@@ -24,6 +58,7 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col" style="width: 40%;">Title</th>
+              <th scope="col">Author</th>
               <th scope="col">Status</th>
               <th scope="col" class="text-end">Actions</th>
             </tr>
@@ -36,6 +71,7 @@
                   
                   <th scope="row"><?php echo $post["id"]   ?></th>
                   <td><?php echo $post["title"]   ?></td>
+                  <td><?php echo $post["name"]   ?></td>
                   <td>
                   <?php if ($post["status"]=="pending") : ?>
                     <span class="badge bg-warning"><?php echo $post["status"] ?></span>
@@ -48,7 +84,7 @@
                       <a
                         href="/post?id=<?php echo $post["id"] ?>"
                         target="_blank"
-                        class="btn btn-primary btn-sm me-2"
+                        class="btn btn-primary btn-sm me-2 <?php echo ($post["status"] === 'pending' ? "disabled" : ""); ?>"
                         ><i class="bi bi-eye"></i
                       ></a>
                       <a
